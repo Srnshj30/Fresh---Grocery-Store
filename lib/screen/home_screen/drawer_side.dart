@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:fresh_grocery_app/screen/my_profile/my_profile.dart';
+import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 
 class DrawerSide extends StatelessWidget {
   const DrawerSide({super.key});
@@ -97,7 +98,17 @@ class DrawerSide extends StatelessWidget {
                 );
               },
             ),
-            listTitle(icon: Icons.shopping_bag_outlined, title: 'Cart'),
+            listTitle(
+              icon: Icons.shopping_bag_outlined,
+              title: 'Cart',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ReviewCart(),
+                  ),
+                );
+              },
+            ),
             listTitle(
               icon: Icons.person_outlined,
               title: 'Profile',

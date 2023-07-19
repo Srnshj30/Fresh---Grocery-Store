@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
+import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 
 import '../search/search.dart';
 import 'drawer_side.dart';
@@ -59,7 +60,13 @@ class HomeScreen extends StatelessWidget {
               radius: 17,
               backgroundColor: Colors.grey[300],
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ReviewCart(),
+                    ),
+                  );
+                },
                 icon: const Icon(
                   Icons.shopping_cart_rounded,
                   size: 22,
