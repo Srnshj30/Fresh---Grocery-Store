@@ -10,8 +10,8 @@ class ProductProvider with ChangeNotifier {
     QuerySnapshot productData =
         await FirebaseFirestore.instance.collection("product").get();
 
-    productData.docs.forEach((element) {
+    for (var element in productData.docs) {
       print(element.data());
-    });
+    }
   }
 }
