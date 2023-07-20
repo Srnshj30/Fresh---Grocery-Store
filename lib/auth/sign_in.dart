@@ -15,14 +15,14 @@ class SignIn extends StatelessWidget {
             image: AssetImage('assets/background.png'),
           ),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 400,
               width: double.infinity,
               // color: Colors.blue,
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(

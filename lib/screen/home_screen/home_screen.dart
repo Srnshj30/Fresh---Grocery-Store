@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
+import 'package:provider/provider.dart';
 
 import '../search/search.dart';
 import 'drawer_side.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Widget listTitle(IconData icon, String title) {
     return ListTile(
       leading: Icon(
@@ -22,8 +29,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // @override
+  // void initState() {
+  //   ProductProvider productProvider = Provider.of(context, listen: false);
+  //   productProvider.fetchVegeProductData();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of(
+      context,
+    );
+    productProvider.fetchVegeProductData();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 233, 231, 231),
       drawer: const DrawerSide(),
