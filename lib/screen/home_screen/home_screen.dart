@@ -4,7 +4,6 @@ import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 import 'package:provider/provider.dart';
-
 import '../search/search.dart';
 import 'drawer_side.dart';
 
@@ -16,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late ProductProvider productProvider;
+
   Widget listTitle(IconData icon, String title) {
     return ListTile(
       leading: Icon(
@@ -29,19 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   ProductProvider productProvider = Provider.of(context, listen: false);
-  //   productProvider.fetchVegeProductData();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    ProductProvider productProvider = Provider.of(context, listen: false);
+    productProvider.fetchVegeProductData();
+    productProvider.fetchFruitProductData();
+    productProvider.fetchHerbProductData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of(
-      context,
-    );
-    productProvider.fetchVegeProductData();
+    productProvider = Provider.of(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 233, 231, 231),
       drawer: const DrawerSide(),
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.only(right: 50, top: 20),
+                          padding: EdgeInsets.only(right: 55, top: 40),
                           child: Text(
                             '30% Off',
                             style: TextStyle(
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.only(right: 90, top: 50),
+                          padding: EdgeInsets.only(right: 80, top: 15),
                           child: Text(
                             '*Terms and Conditions Applied',
                             style: TextStyle(
@@ -212,89 +212,27 @@ class _HomeScreenState extends State<HomeScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  // const SizedBox(width: 0),
-                  SingleProduct(
-                    productImage: 'assets/potato.png',
-                    productName: 'Potato',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/potato.png',
-                            productName: 'Potato',
-                            productAbout:
-                                'The potato is a starchy food, a tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas.',
+                children: productProvider.getVegeProductDataList.map(
+                  (e) {
+                    return SingleProduct(
+                      productImage: e.productImage,
+                      productName: e.productName,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductOverview(
+                              productImage: e.productImage,
+                              productName: e.productName,
+                              productAbout: e.productAbout,
+                              productPrice: e.productPrice,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/tomato1.png',
-                    productName: 'Tomato',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/tomato1.png',
-                            productName: 'Tomato',
-                            productAbout:
-                                'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/onion.png',
-                    productName: 'Onion',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/onion.png',
-                            productName: 'Onion',
-                            productAbout:
-                                'An onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/ladyfinger.png',
-                    productName: 'Lady Finger',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/ladyfinger.png',
-                            productName: 'Lady Finger',
-                            productAbout:
-                                'Ladyfinger, popularly known as bhindi in India, is rich in nutrients. It is considered a good source of carbohydrates, proteins, vitamins, enzymes, calcium, potassium and many other nutrients.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/capsicum.png',
-                    productName: 'Capsicum',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/capsicum.png',
-                            productName: 'Capsicum',
-                            productAbout:
-                                'Capsicum is a genus of flowering plants in the nightshade family Solanaceae, native to the Americas, cultivated worldwide for their chili pepper or bell pepper fruit.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                      productPrice: e.productPrice,
+                    );
+                  },
+                ).toList(),
               ),
             ),
             const Padding(
@@ -319,89 +257,27 @@ class _HomeScreenState extends State<HomeScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  // const SizedBox(width: 0),
-                  SingleProduct(
-                    productImage: 'assets/watermelon.png',
-                    productName: 'Watermelon',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/watermelon.png',
-                            productName: 'Watermelon',
-                            productAbout:
-                                'Watermelon is a flowering plant species of the Cucurbitaceae family and the name of its edible fruit. A scrambling and trailing vine-like plant, it is a highly cultivated fruit worldwide, with more than 1,000 varieties.',
+                children: productProvider.getFruitProductDataList.map(
+                  (e) {
+                    return SingleProduct(
+                      productImage: e.productImage,
+                      productName: e.productName,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductOverview(
+                              productImage: e.productImage,
+                              productName: e.productName,
+                              productAbout: e.productAbout,
+                              productPrice: e.productPrice,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/strawberry.png',
-                    productName: 'Strawberry',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/strawberry.png',
-                            productName: 'Strawberry',
-                            productAbout:
-                                'The garden strawberry is a widely grown hybrid species of the genus Fragaria, collectively known as the strawberries, which are cultivated worldwide for their fruit.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/mango.png',
-                    productName: 'Mango',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/mango.png',
-                            productName: 'Mango',
-                            productAbout:
-                                'A mango is an edible stone fruit produced by the tropical tree Mangifera indica. It is believed to have originated in southern Asia, particularly in eastern India, Bangladesh, and the Andaman Islands.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/banana.png',
-                    productName: 'Banana',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/banana.png',
-                            productName: 'Banana',
-                            productAbout:
-                                'A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called "plantains", distinguishing them from dessert bananas.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/orange.png',
-                    productName: 'Orange',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/orange.png',
-                            productName: 'Orange',
-                            productAbout:
-                                'An orange is a fruit of various citrus species in the family Rutaceae; it primarily refers to Citrus × sinensis, which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                      productPrice: e.productPrice,
+                    );
+                  },
+                ).toList(),
               ),
             ),
             const Padding(
@@ -426,89 +302,27 @@ class _HomeScreenState extends State<HomeScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  // const SizedBox(width: 0),
-                  SingleProduct(
-                    productImage: 'assets/fresh_basil.png',
-                    productName: 'Fresh Basil',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/fresh_basil.png',
-                            productName: 'Fresh Basil',
-                            productAbout:
-                                'Basil. It is a tender plant, and is used in cuisines worldwide. In Western cuisine, the generic term "basil" refers to the variety also known as sweet basil or Genovese basil. Basil is native to tropical regions from Central Africa to Southeast Asia.',
+                children: productProvider.getHerbProductDataList.map(
+                  (e) {
+                    return SingleProduct(
+                      productImage: e.productImage,
+                      productName: e.productName,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductOverview(
+                              productImage: e.productImage,
+                              productName: e.productName,
+                              productAbout: e.productAbout,
+                              productPrice: e.productPrice,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/fresh_mint.png',
-                    productName: 'Fresh Mint',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/fresh_mint.png',
-                            productName: 'Fresh Mint',
-                            productAbout:
-                                'Spearmint, also known as garden mint, common mint, lamb mint and mackerel mint, is a species of mint, Mentha spicata, native to Europe and southern temperate Asia, extending from Ireland in the west to southern China in the east.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/oregano.png',
-                    productName: 'Oregano',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/oregano.png',
-                            productName: 'Oregano',
-                            productAbout:
-                                'Oregano is an herb composed of the fresh or dried leaves of the oregano plant. The plant has tiny leaves that lend a pungent aroma and strong flavor to a variety of savory foods.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/bay_leaf.png',
-                    productName: 'Bay Leaf',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/bay_leaf.png',
-                            productName: 'Bay Leaf',
-                            productAbout:
-                                'Bay leaf (also known as laurel) is a spice commonly used to flavor soups and meat dishes for its light, herbal flavor. It is sometimes sold in stores in a powder or as a fresh leaf, but it is most often found as a dry, whole leaf.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  SingleProduct(
-                    productImage: 'assets/fresh_dill.png',
-                    productName: 'Fresh Dill',
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ProductOverview(
-                            productImage: 'assets/fresh_dill.png',
-                            productName: 'Fresh Dill',
-                            productAbout:
-                                'Dill is an annual herb in the celery family Apiaceae. It is native to North Africa, Chad, Iran, and the Arabian Peninsula; it is grown widely in Eurasia, where its leaves and seeds are used as a herb or spice for flavouring food.',
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                      productPrice: e.productPrice,
+                    );
+                  },
+                ).toList(),
               ),
             ),
           ],

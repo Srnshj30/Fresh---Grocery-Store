@@ -4,7 +4,6 @@ import 'package:fresh_grocery_app/provider/product_provider.dart';
 // import 'package: fresh_grocery_app/auth/sign_in.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -24,6 +23,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<ProductProvider>(
       create: (context) => ProductProvider(),
       child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: HomeScreen(),
       ),
     );

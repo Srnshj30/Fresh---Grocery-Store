@@ -37,7 +37,7 @@ class SingleItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 1.0),
+                            padding: EdgeInsets.only(top: 1.0, bottom: 5),
                             child: Text(
                               "Product Name",
                               style: TextStyle(
@@ -57,7 +57,7 @@ class SingleItem extends StatelessWidget {
                       isBool == false
                           ? Container(
                               width: 100,
-                              height: 35,
+                              height: 31,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(30),
@@ -79,7 +79,7 @@ class SingleItem extends StatelessWidget {
                               ),
                             )
                           : const Padding(
-                              padding: EdgeInsets.only(bottom: 25.0),
+                              padding: EdgeInsets.only(bottom: 5.0),
                               child: Text(
                                 '50 Grams',
                                 style: TextStyle(fontSize: 16),

@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "56069614938",
-    "project_id": "fresh---grocery-shopping-app",
-    "storage_bucket": "fresh---grocery-shopping-app.appspot.com"
+    "project_number": "916090438713",
+    "project_id": "fresh---grocery-app-d381a",
+    "storage_bucket": "fresh---grocery-app-d381a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:56069614938:android:41773785f0298d00929763",
+        "mobilesdk_app_id": "1:916090438713:android:c8e33dcb6a2b1786bf39e8",
         "android_client_info": {
           "package_name": "com.example.fresh_grocery_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "56069614938-g68nidq01g8t71qoko8r7cmt9r3q5m6d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBxfFMMTpIVWqcvEaX93BAoc5mQL9bnibc"
+          "current_key": "AIzaSyD-hAt4tY8ki0rU5ePRnE4TG3LrcOL03To"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "56069614938-g68nidq01g8t71qoko8r7cmt9r3q5m6d.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "56069614938-c6v42mgf6bnkict5o9loou9ll67gp0dv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.freshGroceryApp"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

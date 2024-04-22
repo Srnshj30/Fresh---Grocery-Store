@@ -6,10 +6,12 @@ class ProductOverview extends StatefulWidget {
   final String productName;
   final String productImage;
   final String productAbout;
+  final int productPrice;
   const ProductOverview({
     required this.productImage,
     required this.productName,
     required this.productAbout,
+    required this.productPrice,
     super.key,
   });
 
@@ -99,11 +101,11 @@ class _ProductOverviewState extends State<ProductOverview> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    subtitle: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        '\$50',
-                        style: TextStyle(fontSize: 20),
+                        'Rs ${widget.productPrice}',
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ),
                   ),
@@ -153,16 +155,16 @@ class _ProductOverviewState extends State<ProductOverview> {
                               ),
                             ],
                           ),
-                          const Text(
-                            '\$50',
-                            style: TextStyle(fontSize: 20),
+                          Text(
+                            'Rs ${widget.productPrice}',
+                            style: const TextStyle(fontSize: 20),
                           ),
                           Container(
-                            height: 40,
-                            width: 120,
+                            height: 60,
+                            width: 101,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 10,
+                              horizontal: 20,
+                              vertical: 0,
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),

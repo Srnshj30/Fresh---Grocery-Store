@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 class SingleProduct extends StatelessWidget {
   final String productImage;
   final String productName;
+  final int productPrice;
   final Function() onTap;
-  const SingleProduct(
-      {super.key,
-      required this.productImage,
-      required this.productName,
-      required this.onTap});
+  const SingleProduct({
+    super.key,
+    required this.productImage,
+    required this.productName,
+    required this.onTap,
+    required this.productPrice,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,8 @@ class SingleProduct extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                padding:
+                    const EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -49,15 +53,15 @@ class SingleProduct extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    const Text(
-                      '\$50/50 Grams',
-                      style: TextStyle(
+                    Text(
+                      'Rs $productPrice/Kg',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 154, 154, 154),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 7),
+                      padding: const EdgeInsets.only(top: 0),
                       child: Row(
                         children: [
                           Expanded(
