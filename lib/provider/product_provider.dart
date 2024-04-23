@@ -9,7 +9,7 @@ class ProductProvider with ChangeNotifier {
   List<ProductModel> herbProductList = [];
 
   late ProductModel productModel;
-
+  List<ProductModel> search = [];
   productModels(QueryDocumentSnapshot element) {
     productModel = ProductModel(
       productImage: element.get("productImage"),
@@ -17,6 +17,7 @@ class ProductProvider with ChangeNotifier {
       productPrice: element.get("productPrice"),
       productAbout: element.get("productAbout"),
     );
+    search.add(productModel);
   }
 
   fetchVegeProductData() async {
@@ -68,5 +69,9 @@ class ProductProvider with ChangeNotifier {
 
   List<ProductModel> get getHerbProductDataList {
     return herbProductList;
+  }
+
+  List<ProductModel> get getAllProductSearch {
+    return search;
   }
 }

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 
-import '../../single_item.dart';
+import '../../widgets/single_item.dart';
 
-class ReviewCart extends StatelessWidget {
+class ReviewCart extends StatefulWidget {
   const ReviewCart({super.key});
 
+  @override
+  State<ReviewCart> createState() => _ReviewCartState();
+}
+
+class _ReviewCartState extends State<ReviewCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,15 +52,11 @@ class ReviewCart extends StatelessWidget {
           backgroundColor: taskbarColor,
         ),
         body: ListView(
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 10,
             ),
-            SingleItem(isBool: true),
-            SingleItem(isBool: true),
-            SingleItem(isBool: true),
-            SingleItem(isBool: true),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
           ],

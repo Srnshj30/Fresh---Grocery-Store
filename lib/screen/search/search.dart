@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
-import 'package:fresh_grocery_app/single_item.dart';
+import 'package:fresh_grocery_app/model/product_model.dart';
+import 'package:fresh_grocery_app/widgets/single_item.dart';
 
-class Search extends StatelessWidget {
-  const Search({super.key});
+class Search extends StatefulWidget {
+  final List<ProductModel> search;
+  const Search({super.key, required this.search});
+
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  String query = "";
+  List<ProductModel> searchItem(String query) {
+    List<ProductModel> searchFood = widget.search.where(
+      (element) {
+        return element.productName.toLowerCase().contains(query);
+      },
+    ).toList();
+    return searchFood;
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<ProductModel> _searchItem = searchItem(query);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -29,6 +47,11 @@ class Search extends StatelessWidget {
             height: 52,
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  query = value;
+                });
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -44,10 +67,16 @@ class Search extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
+          Column(
+            children: _searchItem.map((data) {
+              return SingleItem(
+                isBool: false,
+                productImage: data.productImage,
+                productName: data.productName,
+                productPrice: data.productPrice,
+              );
+            }).toList(),
+          )
         ],
       ),
     );

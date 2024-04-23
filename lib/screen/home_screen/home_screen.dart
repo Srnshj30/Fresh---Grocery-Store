@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
@@ -60,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const Search(),
+                      builder: (context) => Search(
+                        search: productProvider.getAllProductSearch,
+                      ),
                     ),
                   );
                 },
@@ -190,20 +194,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 20, left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Fresh Vegetables',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 121, 120, 120),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Search(
+                            search: productProvider.getVegeProductDataList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 121, 120, 120),
+                      ),
                     ),
                   ),
                 ],
@@ -235,20 +250,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ).toList(),
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 20, left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Fresh Fruits',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 121, 120, 120),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Search(
+                            search: productProvider.getFruitProductDataList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 121, 120, 120),
+                      ),
                     ),
                   ),
                 ],
@@ -280,20 +306,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ).toList(),
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 20, left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Herbs Seasonings',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 121, 120, 120),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Search(
+                            search: productProvider.getHerbProductDataList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 121, 120, 120),
+                      ),
                     ),
                   )
                 ],

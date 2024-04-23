@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/widgets/count.dart';
 
 class SingleProduct extends StatelessWidget {
   final String productImage;
@@ -106,57 +107,58 @@ class SingleProduct extends StatelessWidget {
                               width: 7,
                             ),
                           ),
-                          Expanded(
-                            flex: 10,
-                            child: Container(
-                              height: 30,
-                              width: 58,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color.fromARGB(
-                                        255, 201, 199, 199)),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Row(
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 5),
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 18,
-                                        color:
-                                            Color.fromARGB(255, 93, 134, 155),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Center(
-                                      child: Text(
-                                        '1',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 93, 134, 155),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(right: 5),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 18,
-                                        color:
-                                            Color.fromARGB(255, 93, 134, 155),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
+                          const Count(),
+                          // Expanded(
+                          //   flex: 10,
+                          //   child: Container(
+                          //     height: 30,
+                          //     width: 58,
+                          //     decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //           color: const Color.fromARGB(
+                          //               255, 201, 199, 199)),
+                          //       borderRadius: BorderRadius.circular(10),
+                          //     ),
+                          //     child: const Row(
+                          //       children: [
+                          //         Expanded(
+                          //           child: Padding(
+                          //             padding: EdgeInsets.only(left: 5),
+                          //             child: Icon(
+                          //               Icons.remove,
+                          //               size: 18,
+                          //               color:
+                          //                   Color.fromARGB(255, 93, 134, 155),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         Expanded(
+                          //           child: Center(
+                          //             child: Text(
+                          //               '1',
+                          //               style: TextStyle(
+                          //                 fontSize: 20,
+                          //                 color:
+                          //                     Color.fromARGB(255, 93, 134, 155),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         Expanded(
+                          //           child: Padding(
+                          //             padding: EdgeInsets.only(right: 5),
+                          //             child: Icon(
+                          //               Icons.add,
+                          //               size: 18,
+                          //               color:
+                          //                   Color.fromARGB(255, 93, 134, 155),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
