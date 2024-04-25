@@ -7,12 +7,14 @@ class ProductOverview extends StatefulWidget {
   final String productImage;
   final String productAbout;
   final int productPrice;
+  final String productId;
   const ProductOverview({
     required this.productImage,
     required this.productName,
     required this.productAbout,
     required this.productPrice,
     super.key,
+    required this.productId,
   });
 
   @override

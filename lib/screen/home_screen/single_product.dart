@@ -4,6 +4,7 @@ import 'package:fresh_grocery_app/widgets/count.dart';
 class SingleProduct extends StatelessWidget {
   final String productImage;
   final String productName;
+  final String productId;
   final int productPrice;
   final Function() onTap;
   const SingleProduct({
@@ -12,6 +13,7 @@ class SingleProduct extends StatelessWidget {
     required this.productName,
     required this.onTap,
     required this.productPrice,
+    required this.productId,
   });
 
   @override
@@ -107,7 +109,12 @@ class SingleProduct extends StatelessWidget {
                               width: 7,
                             ),
                           ),
-                          const Count(),
+                          Count(
+                            productName: productName,
+                            productId: productId,
+                            productImage: productImage,
+                            productPrice: productPrice,
+                          ),
                           // Expanded(
                           //   flex: 10,
                           //   child: Container(
