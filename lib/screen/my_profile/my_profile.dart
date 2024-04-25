@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/screen/home_screen/drawer_side.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
+  @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
   Widget listTile({required IconData icon, required String title}) {
     return Column(
       children: [
@@ -126,9 +132,14 @@ class MyProfile extends StatelessWidget {
                       icon: Icons.addchart_outlined,
                       title: "About",
                     ),
-                    listTile(
-                      icon: Icons.exit_to_app_outlined,
-                      title: "Log Out",
+                    InkWell(
+                      onTap: () {
+                        GoogleSignIn().signOut();
+                      },
+                      child: listTile(
+                        icon: Icons.exit_to_app_outlined,
+                        title: "Log Out",
+                      ),
                     ),
                   ],
                 ),

@@ -1,10 +1,48 @@
 // import 'package:auth_buttons/auth_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:auth_buttons/auth_buttons.dart';
+// import 'package:fresh_grocery_app/auth/auth_servies.dart';
+import 'package:fresh_grocery_app/provider/user_provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of(context);
+    Future<void> signInWithGoogle() async {
+      try {
+        final GoogleSignIn googleSignIn = GoogleSignIn(
+          scopes: [
+            'email',
+          ],
+        );
+
+        final FirebaseAuth auth = FirebaseAuth.instance;
+
+        final GoogleSignInAccount? gUser = await googleSignIn.signIn();
+
+        final GoogleSignInAuthentication? gAuth = await gUser?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: gAuth?.accessToken,
+          idToken: gAuth?.idToken,
+        );
+        User? user = (await auth.signInWithCredential(credential)).user;
+        userProvider.addUserData(
+          currentUser: user!,
+          userName: user.displayName!,
+          userEmail: user.email!,
+          userImage: user.photoURL!,
+        );
+      } catch (e) {
+        // ignore: avoid_print
+        print(e.toString());
+      }
+    }
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -15,7 +53,7 @@ class SignIn extends StatelessWidget {
             image: AssetImage('assets/background.png'),
           ),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
@@ -25,14 +63,14 @@ class SignIn extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
+                  const Text(
                     'Sign In to continue',
                     style: TextStyle(
                         fontSize: 20,
                         fontStyle: FontStyle.italic,
                         color: Color.fromARGB(255, 127, 127, 127)),
                   ),
-                  Text(
+                  const Text(
                     'Fresh',
                     style: TextStyle(
                       fontSize: 100,
@@ -48,7 +86,10 @@ class SignIn extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Column(
+                  GoogleAuthButton(
+                    onPressed: () => signInWithGoogle(),
+                  ),
+                  const Column(
                     children: [
                       Text(
                         'By signing in you are agreeing to our',
