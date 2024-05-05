@@ -72,6 +72,7 @@ class _SearchState extends State<Search> {
               return SingleItem(
                 isBool: false,
                 productImage: data.productImage,
+                productId: data.productId,
                 productName: data.productName,
                 productPrice: data.productPrice,
                 onDelete: () {},

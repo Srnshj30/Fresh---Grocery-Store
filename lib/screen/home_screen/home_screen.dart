@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import '../search/search.dart';
 import 'drawer_side.dart';
@@ -91,6 +90,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 icon: const Icon(
                   Icons.shopping_cart_rounded,
+                  size: 22,
+                  color: Color.fromARGB(255, 161, 174, 177),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5, right: 12),
+            child: CircleAvatar(
+              radius: 17,
+              backgroundColor: Colors.grey[300],
+              child: IconButton(
+                onPressed: () {
+                  GoogleSignIn().signOut();
+                },
+                icon: const Icon(
+                  Icons.exit_to_app,
                   size: 22,
                   color: Color.fromARGB(255, 161, 174, 177),
                 ),
@@ -240,11 +256,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               productName: e.productName,
                               productAbout: e.productAbout,
                               productPrice: e.productPrice,
+                              productId: e.productId,
                             ),
                           ),
                         );
                       },
                       productPrice: e.productPrice,
+                      productId: e.productId,
                     );
                   },
                 ).toList(),
@@ -296,11 +314,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               productName: e.productName,
                               productAbout: e.productAbout,
                               productPrice: e.productPrice,
+                              productId: e.productId,
                             ),
                           ),
                         );
                       },
                       productPrice: e.productPrice,
+                      productId: e.productId,
                     );
                   },
                 ).toList(),
@@ -352,11 +372,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               productName: e.productName,
                               productAbout: e.productAbout,
                               productPrice: e.productPrice,
+                              productId: e.productId,
                             ),
                           ),
                         );
                       },
                       productPrice: e.productPrice,
+                      productId: e.productId,
                     );
                   },
                 ).toList(),
