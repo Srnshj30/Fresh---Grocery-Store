@@ -7,8 +7,6 @@ import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
 import 'package:fresh_grocery_app/provider/user_provider.dart';
 import 'package:fresh_grocery_app/provider/wishlist_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
-// import 'package: fresh_grocery_app/auth/sign_in.dart';
-// import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -46,9 +44,9 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, snapshot) {
-              // if (snapshot.connectionState == ConnectionState.waiting) {
-              //   return const SplashScreen();
-              // }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold();
+              }
               if (snapshot.hasData) {
                 return const HomeScreen();
               }

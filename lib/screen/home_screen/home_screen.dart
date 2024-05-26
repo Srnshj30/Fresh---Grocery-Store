@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
+import 'package:fresh_grocery_app/provider/user_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/single_product.dart';
 import 'package:fresh_grocery_app/screen/product_overview/product_overview.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
@@ -43,9 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of(context);
+    UserProvider userProvider = Provider.of(context);
+    userProvider.getUserData();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 233, 231, 231),
-      drawer: const DrawerSide(),
+      drawer: DrawerSide(
+        userProvider: userProvider,
+      ),
       appBar: AppBar(
         // elevation: 0,
         title: const Text(

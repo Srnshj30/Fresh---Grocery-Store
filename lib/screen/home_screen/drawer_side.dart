@@ -1,12 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:fresh_grocery_app/provider/user_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:fresh_grocery_app/screen/my_profile/my_profile.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 import 'package:fresh_grocery_app/screen/wishlist/wishlist.dart';
 
-class DrawerSide extends StatelessWidget {
-  const DrawerSide({super.key});
+class DrawerSide extends StatefulWidget {
+  final UserProvider userProvider;
+  const DrawerSide({super.key, required this.userProvider});
 
+  @override
+  State<DrawerSide> createState() => _DrawerSideState();
+}
+
+class _DrawerSideState extends State<DrawerSide> {
   Widget listTitle(
       {required IconData icon, required String title, Function()? onTap}) {
     return ListTile(
@@ -24,6 +33,7 @@ class DrawerSide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userData = widget.userProvider.currentUserData;
     return Drawer(
       child: Container(
         color: const Color.fromARGB(255, 193, 210, 219),
@@ -32,14 +42,14 @@ class DrawerSide extends StatelessWidget {
             DrawerHeader(
               child: Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     backgroundColor: Colors.white54,
                     radius: 43,
                     child: CircleAvatar(
                       // backgroundImage: AssetImage('assets/logo.jpg'),
-                      backgroundImage: NetworkImage(
+                      backgroundImage: NetworkImage(userData.userImage ??
                           'https://img.freepik.com/premium-vector/fresh-supermarket-logo-with-letter-f-fast-shop-logo_221979-179.jpg'),
-                      backgroundColor: Color.fromARGB(255, 187, 203, 215),
+                      backgroundColor: const Color.fromARGB(255, 187, 203, 215),
                       // radius: 40,
                       maxRadius: 40,
                       /*child: Center(
@@ -67,22 +77,29 @@ class DrawerSide extends StatelessWidget {
                     width: 15,
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Welcome Guest',
-                        style: TextStyle(fontSize: 15, color: Colors.black54),
+                      Text(
+                        userData.userName,
+                        style: const TextStyle(
+                            fontSize: 15, color: Colors.black54),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                      Text(
+                        userData.userEmail,
+                        style: const TextStyle(
+                            fontSize: 15, color: Colors.black54),
                       ),
+                      // OutlinedButton(
+                      //   onPressed: () {},
+                      //   child: const Text(
+                      //     'Login',
+                      //     style: TextStyle(color: Colors.black54),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
@@ -116,7 +133,9 @@ class DrawerSide extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const MyProfile(),
+                    builder: (context) => MyProfile(
+                      userProvider: widget.userProvider,
+                    ),
                   ),
                 );
               },

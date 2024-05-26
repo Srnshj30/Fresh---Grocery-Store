@@ -1,10 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:fresh_grocery_app/config/config.dart';
-import 'package:fresh_grocery_app/screen/home_screen/drawer_side.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:fresh_grocery_app/config/config.dart';
+import 'package:fresh_grocery_app/provider/user_provider.dart';
+import 'package:fresh_grocery_app/screen/home_screen/drawer_side.dart';
+
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key});
+  final UserProvider userProvider;
+  const MyProfile({
+    super.key,
+    required this.userProvider,
+  });
 
   @override
   State<MyProfile> createState() => _MyProfileState();
@@ -31,6 +38,7 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    var userData = widget.userProvider.currentUserData;
     return Scaffold(
       // backgroundColor: Colors.black38,
       backgroundColor: taskbarColor,
@@ -39,7 +47,9 @@ class _MyProfileState extends State<MyProfile> {
         title: const Text('My Profile'),
         backgroundColor: taskbarColor,
       ),
-      drawer: const DrawerSide(),
+      drawer: DrawerSide(
+        userProvider: widget.userProvider,
+      ),
       body: Stack(
         children: [
           Column(
@@ -74,20 +84,20 @@ class _MyProfileState extends State<MyProfile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Saransh Jindal',
-                                    style: TextStyle(
+                                    userData.userName,
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
-                                  Text('saranshj35@gmail.com'),
+                                  Text(userData.userEmail),
                                 ],
                               ),
                               CircleAvatar(
@@ -151,9 +161,9 @@ class _MyProfileState extends State<MyProfile> {
             child: CircleAvatar(
               radius: 50,
               backgroundColor: taskbarColor,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 45,
-                backgroundImage: NetworkImage(
+                backgroundImage: NetworkImage(userData.userImage ??
                     'https://img.freepik.com/premium-vector/fresh-supermarket-logo-with-letter-f-fast-shop-logo_221979-179.jpg'),
               ),
             ),

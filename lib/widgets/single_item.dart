@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
 
 // ignore: must_be_immutable
