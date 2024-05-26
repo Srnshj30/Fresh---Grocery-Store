@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:fresh_grocery_app/screen/my_profile/my_profile.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
+import 'package:fresh_grocery_app/screen/wishlist/wishlist.dart';
 
 class DrawerSide extends StatelessWidget {
   const DrawerSide({super.key});
@@ -120,7 +121,17 @@ class DrawerSide extends StatelessWidget {
                 );
               },
             ),
-            listTitle(icon: Icons.favorite_outline, title: 'Wishlist'),
+            listTitle(
+              icon: Icons.favorite_outline,
+              title: 'Wishlist',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const Wishlist(),
+                  ),
+                );
+              },
+            ),
             listTitle(
                 icon: Icons.notifications_outlined, title: 'Notification'),
             listTitle(icon: Icons.star_outline, title: 'Ratings & Review'),

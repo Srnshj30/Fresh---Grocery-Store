@@ -5,6 +5,7 @@ import 'package:fresh_grocery_app/auth/sign_in.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
 import 'package:fresh_grocery_app/provider/user_provider.dart';
+import 'package:fresh_grocery_app/provider/wishlist_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 // import 'package: fresh_grocery_app/auth/sign_in.dart';
 // import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider<WishlistProvider>(
+          create: (context) => WishlistProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/provider/wishlist_provider.dart';
+import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
+import 'package:fresh_grocery_app/widgets/count.dart';
+import 'package:provider/provider.dart';
 
 enum Signincharacter { fill, outline }
 
@@ -30,49 +36,99 @@ class _ProductOverviewState extends State<ProductOverview> {
     required String title,
     required Color textColor,
     required IconData iconData,
+    required void Function() ontap,
   }) {
     return Expanded(
-      child: Container(
-        height: 60,
-        color: backgroundColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              iconData,
-              color: iconColor,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              title,
-              style: TextStyle(color: textColor),
-            ),
-          ],
+      child: GestureDetector(
+        onTap: ontap,
+        child: Container(
+          height: 60,
+          color: backgroundColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                iconData,
+                color: iconColor,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                title,
+                style: TextStyle(color: textColor),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  bool wishlistBool = false;
+
+  getWishlistBool() {
+    FirebaseFirestore.instance
+        .collection("Wishlist")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("YourWishlist")
+        .doc(widget.productId)
+        .get()
+        .then((value) => {
+              if (mounted)
+                {
+                  if (value.exists)
+                    {
+                      setState(
+                        () {
+                          wishlistBool = value.get("wishlist");
+                        },
+                      ),
+                    },
+                },
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of(context);
+    getWishlistBool();
     return Scaffold(
       bottomNavigationBar: Row(
         children: [
           bottomNavigation(
-            iconColor: Colors.white,
-            backgroundColor: const Color.fromARGB(255, 124, 124, 122),
-            title: 'Add to WishList',
-            textColor: Colors.white,
-            iconData: Icons.favorite_outline,
-          ),
+              iconColor: Colors.white,
+              backgroundColor: const Color.fromARGB(255, 124, 124, 122),
+              title: 'Add to WishList',
+              textColor: Colors.white,
+              iconData: !wishlistBool ? Icons.favorite_outline : Icons.favorite,
+              ontap: () {
+                setState(() {
+                  wishlistBool = !wishlistBool;
+                });
+                if (wishlistBool == true) {
+                  wishlistProvider.addwishlistData(
+                      wishlistName: widget.productName,
+                      wishlistId: widget.productId,
+                      wishlistImage: widget.productImage,
+                      wishlistPrice: widget.productPrice);
+                } else {
+                  wishlistProvider.wishlistDeleteData(widget.productId);
+                }
+              }),
           bottomNavigation(
             iconColor: Colors.white,
             backgroundColor: const Color.fromARGB(255, 130, 172, 194),
-            title: 'Add to Cart',
+            title: 'Go to Cart',
             textColor: Colors.white,
             iconData: Icons.shopping_bag_outlined,
+            ontap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ReviewCart(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -161,31 +217,45 @@ class _ProductOverviewState extends State<ProductOverview> {
                             'Rs ${widget.productPrice}',
                             style: const TextStyle(fontSize: 20),
                           ),
+                          // Container(
+                          //   height: 60,
+                          //   width: 101,
+                          //   padding: const EdgeInsets.symmetric(
+                          //     horizontal: 20,
+                          //     vertical: 0,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(30),
+                          //     border: Border.all(color: Colors.grey),
+                          //   ),
+                          //   child: const Row(
+                          //     mainAxisAlignment: MainAxisAlignment.start,
+                          //     children: [
+                          //       Icon(
+                          //         Icons.add,
+                          //         color: Colors.black,
+                          //       ),
+                          //       Text(
+                          //         'ADD',
+                          //         style: TextStyle(
+                          //           fontSize: 17,
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           Container(
                             height: 60,
-                            width: 101,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 0,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(color: Colors.grey),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  'ADD',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ],
+                            width: 100,
+                            // decoration: BoxDecoration(
+                            //   borderRadius: BorderRadius.circular(30),
+                            //   border: Border.all(color: Colors.grey),
+                            // ),
+                            child: Count(
+                              productName: widget.productName,
+                              productId: widget.productId,
+                              productImage: widget.productImage,
+                              productPrice: widget.productPrice,
                             ),
                           ),
                         ],
