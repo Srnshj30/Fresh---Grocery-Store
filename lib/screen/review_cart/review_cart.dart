@@ -97,6 +97,7 @@ class _ReviewCartState extends State<ReviewCart> {
                 ReviewCartModel data =
                     reviewCartProvider.getReviewCartDataList[index];
                 return SingleItem(
+                  wishlist: false,
                   isBool: true,
                   productImage: data.cartImage,
                   productName: data.cartName,

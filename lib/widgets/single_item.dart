@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
@@ -10,9 +9,11 @@ class SingleItem extends StatelessWidget {
   final String productImage;
   final String productName;
   final int productPrice;
+  bool wishlist;
   void Function() onDelete;
   SingleItem({
     required this.isBool,
+    required this.wishlist,
     super.key,
     required this.productImage,
     required this.productName,
@@ -32,7 +33,7 @@ class SingleItem extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: SizedBox(
-                  height: 100,
+                  height: 80,
                   child: Center(
                     child: Image.asset(productImage),
                   ),
@@ -42,7 +43,7 @@ class SingleItem extends StatelessWidget {
                 width: 5,
               ),
               Expanded(
-                flex: 2,
+                flex: 1,
                 child: SizedBox(
                   height: 85,
                   child: Column(
@@ -78,19 +79,44 @@ class SingleItem extends StatelessWidget {
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: const Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '1 KG',
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    Icon(
-                                      Icons.arrow_drop_down_sharp,
-                                      color: Colors.black87,
-                                    ),
-                                  ],
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              title: const Text('250gm'),
+                                              onTap: () {},
+                                            ),
+                                            ListTile(
+                                              title: const Text('500gm'),
+                                              onTap: () {},
+                                            ),
+                                            ListTile(
+                                              title: const Text('1Kg'),
+                                              onTap: () {},
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: const Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '1 KG',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_drop_down_sharp,
+                                        color: Colors.black87,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             )
@@ -105,89 +131,86 @@ class SingleItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: 100,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 17),
-                    child: isBool == false
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            child: Container(
-                              height: 10,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "ADD",
-                                      style: TextStyle(color: taskbarColor),
+              wishlist == false
+                  ? Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 17),
+                          child: isBool == false
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0),
+                                  child: Container(
+                                    height: 10,
+                                    width: 100,
+                                    // decoration: BoxDecoration(
+                                    //   border: Border.all(color: Colors.grey),
+                                    //   borderRadius: BorderRadius.circular(30),
+                                    // ),
+                                    child: Count(
+                                      productName: productName,
+                                      productId: productId,
+                                      productImage: productImage,
+                                      productPrice: productPrice,
                                     ),
-                                    Icon(
-                                      Icons.add,
-                                      size: 18,
-                                      color: taskbarColor,
-                                    )
+                                    // child: Center(
+                                    //   child: Row(
+                                    //     mainAxisAlignment:
+                                    //         MainAxisAlignment.center,
+                                    //     children: [
+                                    //       Text(
+                                    //         "ADD",
+                                    //         style:
+                                    //             TextStyle(color: taskbarColor),
+                                    //       ),
+                                    //       Icon(
+                                    //         Icons.add,
+                                    //         size: 18,
+                                    //         color: taskbarColor,
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                  ),
+                                )
+                              : Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: onDelete,
+                                      child: const Icon(
+                                        Icons.delete_rounded,
+                                        color: Colors.black87,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Count(
+                                      productName: productName,
+                                      productId: productId,
+                                      productImage: productImage,
+                                      productPrice: productPrice,
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              InkWell(
-                                onTap: onDelete,
-                                child: const Icon(
-                                  Icons.delete_rounded,
-                                  color: Colors.black87,
-                                  size: 30,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Count(
-                                productName: productName,
-                                productId: productId,
-                                productImage: productImage,
-                                productPrice: productPrice,
-                              ),
-                              // Container(
-                              //   height: 30,
-                              //   width: 80,
-                              //   decoration: BoxDecoration(
-                              //     border: Border.all(color: Colors.grey),
-                              //     borderRadius: BorderRadius.circular(30),
-                              //   ),
-                              //   child: Center(
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.center,
-                              //       children: [
-                              //         Text(
-                              //           "ADD",
-                              //           style: TextStyle(color: taskbarColor),
-                              //         ),
-                              //         Icon(
-                              //           Icons.add,
-                              //           size: 18,
-                              //           color: taskbarColor,
-                              //         )
-                              //       ],
-                              //     ),
-                              //   ),
-                              // )
-                            ],
-                          ),
-                  ),
-                ),
-              ),
+                        ),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: onDelete,
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(
+                          Icons.delete_rounded,
+                          color: Colors.black87,
+                          size: 40,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
