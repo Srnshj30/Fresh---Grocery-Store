@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
 import 'package:fresh_grocery_app/widgets/product_unit.dart';
 
+// ignore: must_be_immutable
 class SingleProduct extends StatefulWidget {
   final String productImage;
   final String productName;
@@ -74,7 +77,7 @@ class _SingleProductState extends State<SingleProduct> {
                       ),
                     ),
                     Text(
-                      'Rs ${widget.productPrice}/${unitData == null ? firstValue : unitData}',
+                      'Rs ${widget.productPrice}/${unitData ?? firstValue}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 154, 154, 154),
@@ -125,7 +128,7 @@ class _SingleProductState extends State<SingleProduct> {
                                       );
                                     });
                               },
-                              title: unitData == null ? firstValue : unitData,
+                              title: unitData ?? firstValue,
                             ),
                           ),
                           const Expanded(
@@ -138,8 +141,7 @@ class _SingleProductState extends State<SingleProduct> {
                             productId: widget.productId,
                             productImage: widget.productImage,
                             productPrice: widget.productPrice,
-                            productUnit:
-                                unitData == null ? firstValue : unitData,
+                            productUnit: unitData ?? firstValue,
                           ),
                         ],
                       ),

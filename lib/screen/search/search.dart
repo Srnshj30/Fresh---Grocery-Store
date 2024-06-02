@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/model/product_model.dart';
-import 'package:fresh_grocery_app/widgets/single_item.dart';
 import 'package:fresh_grocery_app/widgets/single_item_search.dart';
 
 class Search extends StatefulWidget {
@@ -25,7 +24,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    List<ProductModel> _searchItem = searchItem(query);
+    List<ProductModel> searchItems = searchItem(query);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -69,7 +68,7 @@ class _SearchState extends State<Search> {
             height: 10,
           ),
           Column(
-            children: _searchItem.map((data) {
+            children: searchItems.map((data) {
               return SingleItemSearch(
                 productImage: data.productImage,
                 productId: data.productId,

@@ -163,8 +163,7 @@ class _MyProfileState extends State<MyProfile> {
               backgroundColor: taskbarColor,
               child: CircleAvatar(
                 radius: 45,
-                backgroundImage: NetworkImage(userData.userImage ??
-                    'https://img.freepik.com/premium-vector/fresh-supermarket-logo-with-letter-f-fast-shop-logo_221979-179.jpg'),
+                backgroundImage: NetworkImage(userData.userImage),
               ),
             ),
           )

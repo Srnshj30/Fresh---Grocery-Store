@@ -47,8 +47,7 @@ class _DrawerSideState extends State<DrawerSide> {
                     radius: 43,
                     child: CircleAvatar(
                       // backgroundImage: AssetImage('assets/logo.jpg'),
-                      backgroundImage: NetworkImage(userData.userImage ??
-                          'https://img.freepik.com/premium-vector/fresh-supermarket-logo-with-letter-f-fast-shop-logo_221979-179.jpg'),
+                      backgroundImage: NetworkImage(userData.userImage),
                       backgroundColor: const Color.fromARGB(255, 187, 203, 215),
                       // radius: 40,
                       maxRadius: 40,

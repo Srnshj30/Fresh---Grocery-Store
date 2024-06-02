@@ -2,16 +2,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fresh_grocery_app/model/product_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
 
+// ignore: must_be_immutable
 class Count extends StatefulWidget {
   final String productName;
   final String productId;
   final String productImage;
   final int productPrice;
+  // ignore: prefer_typing_uninitialized_variables
   var productUnit;
   Count(
       {super.key,
@@ -38,7 +39,7 @@ class _CountState extends State<Count> {
         .get()
         .then(
           (value) => {
-            if (this.mounted)
+            if (mounted)
               {
                 if (value.exists)
                   {

@@ -3,6 +3,7 @@ class WishlistModel {
   String productId;
   String productImage;
   int productPrice;
+  // ignore: prefer_typing_uninitialized_variables
   var productUnit;
   WishlistModel({
     required this.productUnit,

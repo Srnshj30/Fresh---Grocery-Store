@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductUnit extends StatelessWidget {
   final Function() onTap;
@@ -24,7 +23,7 @@ class ProductUnit extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: Text(
-                  '$title',
+                  title,
                   style: const TextStyle(
                       fontSize: 15, color: Color.fromARGB(255, 93, 134, 155)),
                 ),
