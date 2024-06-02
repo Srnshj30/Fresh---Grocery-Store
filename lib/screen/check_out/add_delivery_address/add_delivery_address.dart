@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/provider/check_out_provider.dart';
+import 'package:fresh_grocery_app/screen/check_out/google_maps/google_maps.dart';
 import 'package:fresh_grocery_app/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +96,13 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
               controller: checkOutProvider.landmark,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CustomGoogleMaps(),
+                  ),
+                );
+              },
               child: const SizedBox(
                 height: 47,
                 width: double.infinity,
