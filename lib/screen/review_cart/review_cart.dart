@@ -58,11 +58,11 @@ class _ReviewCartState extends State<ReviewCart> {
             style: TextStyle(fontSize: 18),
           ),
         ),
-        subtitle: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.0),
+        subtitle: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(
-            '\$ 170',
-            style: TextStyle(fontSize: 15),
+            '\$ ${reviewCartProvider.getTotalPrice()}',
+            style: const TextStyle(fontSize: 15),
           ),
         ),
         trailing: Padding(

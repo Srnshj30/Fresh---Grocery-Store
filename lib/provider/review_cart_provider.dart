@@ -83,6 +83,14 @@ class ReviewCartProvider with ChangeNotifier {
     return reviewCartDataList;
   }
 
+  getTotalPrice() {
+    double total = 0.0;
+    reviewCartDataList.forEach((element) {
+      total += element.cartPrice * element.cartQty;
+    });
+    return total;
+  }
+
   reviewCartDeleteData(cartId) {
     FirebaseFirestore.instance
         .collection("ReviewCart")
