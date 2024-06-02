@@ -253,10 +253,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     return SingleProduct(
                       productImage: e.productImage,
                       productName: e.productName,
+                      productUnit: e,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ProductOverview(
+                              productUnit: e,
                               productImage: e.productImage,
                               productName: e.productName,
                               productAbout: e.productAbout,
@@ -309,12 +311,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: productProvider.getFruitProductDataList.map(
                   (e) {
                     return SingleProduct(
+                      productUnit: e,
                       productImage: e.productImage,
                       productName: e.productName,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ProductOverview(
+                              productUnit: e,
                               productImage: e.productImage,
                               productName: e.productName,
                               productAbout: e.productAbout,
@@ -367,12 +371,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: productProvider.getHerbProductDataList.map(
                   (e) {
                     return SingleProduct(
+                      productUnit: e,
                       productImage: e.productImage,
                       productName: e.productName,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ProductOverview(
+                              productUnit: e,
                               productImage: e.productImage,
                               productName: e.productName,
                               productAbout: e.productAbout,

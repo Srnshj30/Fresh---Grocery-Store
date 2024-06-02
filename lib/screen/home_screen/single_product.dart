@@ -1,27 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
+import 'package:fresh_grocery_app/widgets/product_unit.dart';
 
-class SingleProduct extends StatelessWidget {
+class SingleProduct extends StatefulWidget {
   final String productImage;
   final String productName;
   final String productId;
   final int productPrice;
+  var productUnit;
   final Function() onTap;
-  const SingleProduct({
+  SingleProduct({
     super.key,
     required this.productImage,
     required this.productName,
     required this.onTap,
     required this.productPrice,
     required this.productId,
+    this.productUnit,
   });
 
   @override
+  State<SingleProduct> createState() => _SingleProductState();
+}
+
+class _SingleProductState extends State<SingleProduct> {
+  var unitData;
+  var firstValue;
+
+  @override
   Widget build(BuildContext context) {
+    widget.productUnit.productUnit.firstWhere(
+      (element) {
+        setState(() {
+          firstValue = element;
+        });
+        return true;
+      },
+    );
     return Padding(
       padding: const EdgeInsets.only(right: 5),
       child: Container(
-        // Basil Container
         height: 200,
         width: 150,
         decoration: BoxDecoration(
@@ -29,16 +47,15 @@ class SingleProduct extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-                onTap: onTap,
+                onTap: widget.onTap,
                 child: Container(
                   height: 120,
                   width: double.infinity,
                   padding: const EdgeInsets.all(5),
                   child: Image(
-                    image: AssetImage(productImage),
+                    image: AssetImage(widget.productImage),
                   ),
                 )),
             Expanded(
@@ -50,14 +67,14 @@ class SingleProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      productName,
+                      widget.productName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
                     Text(
-                      'Rs $productPrice/Kg',
+                      'Rs ${widget.productPrice}/${unitData == null ? firstValue : unitData}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 154, 154, 154),
@@ -69,65 +86,46 @@ class SingleProduct extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 10,
-                            child: InkWell(
+                            child: ProductUnit(
                               onTap: () {
                                 showModalBottomSheet<void>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          ListTile(
-                                            title: const Text('250gm'),
-                                            onTap: () {},
-                                          ),
-                                          ListTile(
-                                            title: const Text('500gm'),
-                                            onTap: () {},
-                                          ),
-                                          ListTile(
-                                            title: const Text('1Kg'),
-                                            onTap: () {},
-                                          ),
-                                        ],
+                                        children: widget.productUnit.productUnit
+                                            .map<Widget>((data) {
+                                          return Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  setState(() {
+                                                    unitData = data;
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 8.0,
+                                                      horizontal: 60),
+                                                  child: Text(
+                                                    data,
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                thickness: 2,
+                                              )
+                                            ],
+                                          );
+                                        }).toList(),
                                       );
                                     });
                               },
-                              child: Container(
-                                height: 30,
-                                width: 59,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: const Color.fromARGB(
-                                          255, 201, 199, 199)),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 5,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 3),
-                                        child: Text(
-                                          '1Kg',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 93, 134, 155)),
-                                        ),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Icon(
-                                        Icons.arrow_drop_down,
-                                        size: 12,
-                                        color:
-                                            Color.fromARGB(255, 93, 134, 155),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              title: unitData == null ? firstValue : unitData,
                             ),
                           ),
                           const Expanded(
@@ -136,62 +134,13 @@ class SingleProduct extends StatelessWidget {
                             ),
                           ),
                           Count(
-                            productName: productName,
-                            productId: productId,
-                            productImage: productImage,
-                            productPrice: productPrice,
+                            productName: widget.productName,
+                            productId: widget.productId,
+                            productImage: widget.productImage,
+                            productPrice: widget.productPrice,
+                            productUnit:
+                                unitData == null ? firstValue : unitData,
                           ),
-                          // Expanded(
-                          //   flex: 10,
-                          //   child: Container(
-                          //     height: 30,
-                          //     width: 58,
-                          //     decoration: BoxDecoration(
-                          //       border: Border.all(
-                          //           color: const Color.fromARGB(
-                          //               255, 201, 199, 199)),
-                          //       borderRadius: BorderRadius.circular(10),
-                          //     ),
-                          //     child: const Row(
-                          //       children: [
-                          //         Expanded(
-                          //           child: Padding(
-                          //             padding: EdgeInsets.only(left: 5),
-                          //             child: Icon(
-                          //               Icons.remove,
-                          //               size: 18,
-                          //               color:
-                          //                   Color.fromARGB(255, 93, 134, 155),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         Expanded(
-                          //           child: Center(
-                          //             child: Text(
-                          //               '1',
-                          //               style: TextStyle(
-                          //                 fontSize: 20,
-                          //                 color:
-                          //                     Color.fromARGB(255, 93, 134, 155),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         Expanded(
-                          //           child: Padding(
-                          //             padding: EdgeInsets.only(right: 5),
-                          //             child: Icon(
-                          //               Icons.add,
-                          //               size: 18,
-                          //               color:
-                          //                   Color.fromARGB(255, 93, 134, 155),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // )
                         ],
                       ),
                     ),

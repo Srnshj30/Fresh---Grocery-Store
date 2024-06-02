@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/model/product_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
@@ -11,13 +12,14 @@ class Count extends StatefulWidget {
   final String productId;
   final String productImage;
   final int productPrice;
-  const Count({
-    super.key,
-    required this.productName,
-    required this.productId,
-    required this.productImage,
-    required this.productPrice,
-  });
+  var productUnit;
+  Count(
+      {super.key,
+      required this.productName,
+      required this.productId,
+      required this.productImage,
+      required this.productPrice,
+      this.productUnit});
 
   @override
   State<Count> createState() => _CountState();
@@ -172,6 +174,7 @@ class _CountState extends State<Count> {
                       cartImage: widget.productImage,
                       cartPrice: widget.productPrice,
                       cartQty: count,
+                      cartUnit: widget.productUnit,
                     );
                   },
                   child: const Text(

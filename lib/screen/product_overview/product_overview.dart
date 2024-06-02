@@ -5,22 +5,26 @@ import 'package:fresh_grocery_app/provider/wishlist_provider.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
 import 'package:provider/provider.dart';
+import 'package:fresh_grocery_app/widgets/product_unit.dart';
 
 enum Signincharacter { fill, outline }
 
+// ignore: must_be_immutable
 class ProductOverview extends StatefulWidget {
   final String productName;
   final String productImage;
   final String productAbout;
   final int productPrice;
   final String productId;
-  const ProductOverview({
+  var productUnit;
+  ProductOverview({
     required this.productImage,
     required this.productName,
     required this.productAbout,
     required this.productPrice,
     super.key,
     required this.productId,
+    this.productUnit,
   });
 
   @override
@@ -28,7 +32,9 @@ class ProductOverview extends StatefulWidget {
 }
 
 class _ProductOverviewState extends State<ProductOverview> {
-  Signincharacter _signincharacter = Signincharacter.fill;
+  // Signincharacter _signincharacter = Signincharacter.fill;
+  var unitData;
+  var firstValue;
 
   Widget bottomNavigation({
     required Color iconColor,
@@ -91,6 +97,14 @@ class _ProductOverviewState extends State<ProductOverview> {
 
   @override
   Widget build(BuildContext context) {
+    widget.productUnit.productUnit.firstWhere(
+      (element) {
+        setState(() {
+          firstValue = element;
+        });
+        return true;
+      },
+    );
     WishlistProvider wishlistProvider = Provider.of(context);
     getWishlistBool();
     return Scaffold(
@@ -108,10 +122,12 @@ class _ProductOverviewState extends State<ProductOverview> {
                 });
                 if (wishlistBool == true) {
                   wishlistProvider.addwishlistData(
-                      wishlistName: widget.productName,
-                      wishlistId: widget.productId,
-                      wishlistImage: widget.productImage,
-                      wishlistPrice: widget.productPrice);
+                    wishlistName: widget.productName,
+                    wishlistId: widget.productId,
+                    wishlistImage: widget.productImage,
+                    wishlistPrice: widget.productPrice,
+                    wishlistUnit: unitData ?? firstValue,
+                  );
                 } else {
                   wishlistProvider.wishlistDeleteData(widget.productId);
                 }
@@ -192,66 +208,60 @@ class _ProductOverviewState extends State<ProductOverview> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 7.0),
-                                child: CircleAvatar(
-                                  radius: 3,
-                                  backgroundColor: Colors.green,
-                                ),
-                              ),
-                              Radio(
-                                value: Signincharacter.fill,
-                                groupValue: _signincharacter,
-                                activeColor: Colors.green,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _signincharacter = value!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
                           Text(
                             'Rs ${widget.productPrice}',
                             style: const TextStyle(fontSize: 20),
                           ),
-                          // Container(
-                          //   height: 60,
-                          //   width: 101,
-                          //   padding: const EdgeInsets.symmetric(
-                          //     horizontal: 20,
-                          //     vertical: 0,
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(30),
-                          //     border: Border.all(color: Colors.grey),
-                          //   ),
-                          //   child: const Row(
-                          //     mainAxisAlignment: MainAxisAlignment.start,
-                          //     children: [
-                          //       Icon(
-                          //         Icons.add,
-                          //         color: Colors.black,
-                          //       ),
-                          //       Text(
-                          //         'ADD',
-                          //         style: TextStyle(
-                          //           fontSize: 17,
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          Container(
+                          SizedBox(
+                            height: 60,
+                            width: 80,
+                            child: ProductUnit(
+                              onTap: () {
+                                showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: widget.productUnit.productUnit
+                                            .map<Widget>((data) {
+                                          return Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  setState(() {
+                                                    unitData = data;
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 8.0,
+                                                      horizontal: 60),
+                                                  child: Text(
+                                                    data,
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                thickness: 2,
+                                              )
+                                            ],
+                                          );
+                                        }).toList(),
+                                      );
+                                    });
+                              },
+                              title: unitData ?? firstValue,
+                            ),
+                          ),
+                          SizedBox(
                             height: 60,
                             width: 100,
-                            // decoration: BoxDecoration(
-                            //   borderRadius: BorderRadius.circular(30),
-                            //   border: Border.all(color: Colors.grey),
-                            // ),
                             child: Count(
+                              productUnit: unitData ?? firstValue,
                               productName: widget.productName,
                               productId: widget.productId,
                               productImage: widget.productImage,

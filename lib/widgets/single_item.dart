@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/widgets/count.dart';
 
 // ignore: must_be_immutable
-class SingleItem extends StatelessWidget {
-  bool isBool = false;
+class SingleItem extends StatefulWidget {
   final String productId;
   final String productImage;
   final String productName;
   final int productPrice;
+  var productUnit;
   bool wishlist;
   void Function() onDelete;
   SingleItem({
-    required this.isBool,
+    this.productUnit,
     required this.wishlist,
     super.key,
     required this.productImage,
@@ -21,6 +21,11 @@ class SingleItem extends StatelessWidget {
     required this.productId,
   });
 
+  @override
+  State<SingleItem> createState() => _SingleItemState();
+}
+
+class _SingleItemState extends State<SingleItem> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +39,7 @@ class SingleItem extends StatelessWidget {
                 child: SizedBox(
                   height: 80,
                   child: Center(
-                    child: Image.asset(productImage),
+                    child: Image.asset(widget.productImage),
                   ),
                 ),
               ),
@@ -55,7 +60,7 @@ class SingleItem extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 1.0, bottom: 5),
                             child: Text(
-                              productName,
+                              widget.productName,
                               style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -63,74 +68,25 @@ class SingleItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Rs $productPrice",
+                            "Rs ${widget.productPrice}",
                             style: const TextStyle(
                               fontSize: 17,
                             ),
                           ),
                         ],
                       ),
-                      isBool == false
-                          ? Container(
-                              width: 100,
-                              height: 31,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  showModalBottomSheet<void>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              title: const Text('250gm'),
-                                              onTap: () {},
-                                            ),
-                                            ListTile(
-                                              title: const Text('500gm'),
-                                              onTap: () {},
-                                            ),
-                                            ListTile(
-                                              title: const Text('1Kg'),
-                                              onTap: () {},
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: const Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '1 KG',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_drop_down_sharp,
-                                        color: Colors.black87,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.only(bottom: 5.0),
-                              child: Text(
-                                '1 kg',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            )
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5.0),
+                        child: Text(
+                          "${widget.productUnit}",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
-              wishlist == false
+              widget.wishlist == false
                   ? Expanded(
                       flex: 1,
                       child: SizedBox(
@@ -138,69 +94,32 @@ class SingleItem extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 17),
-                          child: isBool == false
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0),
-                                  child: Container(
-                                    height: 10,
-                                    width: 100,
-                                    // decoration: BoxDecoration(
-                                    //   border: Border.all(color: Colors.grey),
-                                    //   borderRadius: BorderRadius.circular(30),
-                                    // ),
-                                    child: Count(
-                                      productName: productName,
-                                      productId: productId,
-                                      productImage: productImage,
-                                      productPrice: productPrice,
-                                    ),
-                                    // child: Center(
-                                    //   child: Row(
-                                    //     mainAxisAlignment:
-                                    //         MainAxisAlignment.center,
-                                    //     children: [
-                                    //       Text(
-                                    //         "ADD",
-                                    //         style:
-                                    //             TextStyle(color: taskbarColor),
-                                    //       ),
-                                    //       Icon(
-                                    //         Icons.add,
-                                    //         size: 18,
-                                    //         color: taskbarColor,
-                                    //       )
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                  ),
-                                )
-                              : Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: onDelete,
-                                      child: const Icon(
-                                        Icons.delete_rounded,
-                                        color: Colors.black87,
-                                        size: 30,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Count(
-                                      productName: productName,
-                                      productId: productId,
-                                      productImage: productImage,
-                                      productPrice: productPrice,
-                                    ),
-                                  ],
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: widget.onDelete,
+                                child: const Icon(
+                                  Icons.delete_rounded,
+                                  color: Colors.black87,
+                                  size: 30,
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Count(
+                                productName: widget.productName,
+                                productId: widget.productId,
+                                productImage: widget.productImage,
+                                productPrice: widget.productPrice,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )
                   : InkWell(
-                      onTap: onDelete,
+                      onTap: widget.onDelete,
                       child: const Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(

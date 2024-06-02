@@ -4,8 +4,9 @@ class ReviewCartModel {
   String cartId;
   int cartPrice;
   int cartQty;
-
+  var cartUnit;
   ReviewCartModel({
+    required this.cartUnit,
     required this.cartId,
     required this.cartImage,
     required this.cartName,

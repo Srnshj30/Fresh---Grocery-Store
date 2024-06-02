@@ -98,11 +98,11 @@ class _ReviewCartState extends State<ReviewCart> {
                     reviewCartProvider.getReviewCartDataList[index];
                 return SingleItem(
                   wishlist: false,
-                  isBool: true,
                   productImage: data.cartImage,
                   productName: data.cartName,
                   productPrice: data.cartPrice,
                   productId: data.cartId,
+                  productUnit: data.cartUnit,
                   onDelete: () {
                     showAlertDialog(
                       context,

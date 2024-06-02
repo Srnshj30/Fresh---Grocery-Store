@@ -66,7 +66,7 @@ class _WishlistState extends State<Wishlist> {
                     wishlistProvider.getWishlistDataList[index];
                 return SingleItem(
                   wishlist: true,
-                  isBool: true,
+                  productUnit: data.productUnit,
                   productImage: data.productImage,
                   productName: data.productName,
                   productPrice: data.productPrice,

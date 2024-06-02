@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/model/product_model.dart';
 import 'package:fresh_grocery_app/widgets/single_item.dart';
+import 'package:fresh_grocery_app/widgets/single_item_search.dart';
 
 class Search extends StatefulWidget {
   final List<ProductModel> search;
@@ -69,13 +70,12 @@ class _SearchState extends State<Search> {
           ),
           Column(
             children: _searchItem.map((data) {
-              return SingleItem(
-                wishlist: false,
-                isBool: false,
+              return SingleItemSearch(
                 productImage: data.productImage,
                 productId: data.productId,
                 productName: data.productName,
                 productPrice: data.productPrice,
+                productUnit: data,
                 onDelete: () {},
               );
             }).toList(),
