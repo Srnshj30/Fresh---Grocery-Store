@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/model/review_cart_model.dart';
 import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
+import 'package:fresh_grocery_app/screen/check_out/delivery_details/delivery_details.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/single_item.dart';
@@ -61,17 +63,31 @@ class _ReviewCartState extends State<ReviewCart> {
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Text(
-            '\$ ${reviewCartProvider.getTotalPrice()}',
-            style: const TextStyle(fontSize: 15),
+            'Rs ${reviewCartProvider.getTotalPrice()}',
+            style: const TextStyle(
+              fontSize: 17,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         trailing: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: SizedBox(
-            width: 100,
+            width: 120,
             height: 50,
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                if (reviewCartProvider.getReviewCartDataList.isEmpty) {
+                  Fluttertoast.showToast(msg: "Cart Empty");
+                  return;
+                }
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DeliveryDetails(),
+                  ),
+                );
+              },
               color: taskbarColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)),

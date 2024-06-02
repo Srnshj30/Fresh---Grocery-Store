@@ -85,9 +85,9 @@ class ReviewCartProvider with ChangeNotifier {
 
   getTotalPrice() {
     double total = 0.0;
-    reviewCartDataList.forEach((element) {
+    for (var element in reviewCartDataList) {
       total += element.cartPrice * element.cartQty;
-    });
+    }
     return total;
   }
 

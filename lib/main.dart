@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/auth/sign_in.dart';
+import 'package:fresh_grocery_app/provider/check_out_provider.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/provider/review_cart_provider.dart';
 import 'package:fresh_grocery_app/provider/user_provider.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<WishlistProvider>(
           create: (context) => WishlistProvider(),
+        ),
+        ChangeNotifierProvider<CheckOutProvider>(
+          create: (context) => CheckOutProvider(),
         ),
       ],
       child: MaterialApp(
