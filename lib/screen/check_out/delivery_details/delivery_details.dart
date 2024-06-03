@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/config/config.dart';
+import 'package:fresh_grocery_app/model/delivery_address_model.dart';
+import 'package:fresh_grocery_app/provider/check_out_provider.dart';
 import 'package:fresh_grocery_app/screen/check_out/add_delivery_address/add_delivery_address.dart';
 import 'package:fresh_grocery_app/screen/check_out/delivery_details/single_delivery.dart';
 import 'package:fresh_grocery_app/screen/check_out/payment_summary/payment_summary.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class DeliveryDetails extends StatelessWidget {
-  DeliveryDetails({super.key});
-
-  List<Widget> adrs = [
-    const SingleDelivery(
-      title: "Saransh Jindal",
-      address: "Bh - 205, Sector - 70, Noida, UP",
-      addressType: "Home",
-      number: "8851625921",
-    ),
-  ];
+class DeliveryDetails extends StatefulWidget {
+  const DeliveryDetails({super.key});
 
   @override
+  State<DeliveryDetails> createState() => _DeliveryDetailsState();
+}
+
+class _DeliveryDetailsState extends State<DeliveryDetails> {
+  late DeliveryAddressModel value;
+  @override
   Widget build(BuildContext context) {
+    CheckOutProvider deliveryAddressProvider = Provider.of(context);
+    deliveryAddressProvider.getDeliveryAddressData();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: taskbarColor,
@@ -40,7 +42,7 @@ class DeliveryDetails extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 10),
         child: MaterialButton(
           onPressed: () {
-            adrs.isEmpty
+            deliveryAddressProvider.getDeliveryAddressList.isEmpty
                 ? Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const AddDeliveryAddress(),
@@ -48,14 +50,16 @@ class DeliveryDetails extends StatelessWidget {
                   )
                 : Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const PaymentSummary(),
+                      builder: (context) => PaymentSummary(
+                        deliveryAddressList: value,
+                      ),
                     ),
                   );
           },
           color: taskbarColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          child: adrs.isEmpty
+          child: deliveryAddressProvider.getDeliveryAddressList.isEmpty
               ? const Text(
                   "Add Address",
                   style: TextStyle(fontSize: 17),
@@ -80,13 +84,29 @@ class DeliveryDetails extends StatelessWidget {
           ),
           Column(
             children: [
-              adrs.isEmpty
-                  ? Container()
-                  : const SingleDelivery(
-                      title: "Saransh Jindal",
-                      address: "Bh - 205, Sector - 70, Noida, UP",
-                      addressType: "Home",
-                      number: "8851625921",
+              deliveryAddressProvider.getDeliveryAddressList.isEmpty
+                  ? const Center(
+                      child: Text("No Data"),
+                    )
+                  : Column(
+                      children: deliveryAddressProvider.getDeliveryAddressList
+                          .map((e) {
+                        setState(() {
+                          value = e;
+                        });
+                        return SingleDelivery(
+                          title: "${e.firstName} ${e.lastName}",
+                          address:
+                              "${e.houseNo}, ${e.streetNo}, ${e.city}, ${e.state}, ${e.country} - ${e.pincode}, Landmark : ${e.landmark}",
+                          addressType: e.addressType == "AddressTypes.other"
+                              ? "Other"
+                              : e.addressType == "AddressTypes.home"
+                                  ? "Home"
+                                  : "Office",
+                          number: e.mobileNo,
+                          email: e.email,
+                        );
+                      }).toList(),
                     )
             ],
           )

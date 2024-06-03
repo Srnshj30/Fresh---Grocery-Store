@@ -84,7 +84,7 @@ class _ReviewCartState extends State<ReviewCart> {
                 }
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => DeliveryDetails(),
+                    builder: (context) => const DeliveryDetails(),
                   ),
                 );
               },

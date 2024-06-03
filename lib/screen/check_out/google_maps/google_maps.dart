@@ -64,6 +64,7 @@ class _CustomGoogleMapsState extends State<CustomGoogleMaps> {
                     await _location.getLocation().then((value) {
                       checkOutProvider.setLocation = value;
                     });
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   },
                   color: taskbarColor,

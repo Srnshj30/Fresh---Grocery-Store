@@ -64,8 +64,8 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
               controller: checkOutProvider.mobileNo,
             ),
             CustomTextField(
-              labText: "Alternate Mobile Number",
-              controller: checkOutProvider.alternateMobileNo,
+              labText: "Email Id",
+              controller: checkOutProvider.email,
             ),
             CustomTextField(
               labText: "House No.",
@@ -103,14 +103,24 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
                   ),
                 );
               },
-              child: const SizedBox(
+              child: SizedBox(
                 height: 47,
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Set Location"),
+                    checkOutProvider.setLocation?.latitude == null
+                        ? const Text("Set Location")
+                        : const Row(
+                            children: [
+                              Icon(Icons.check),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Location Added!"),
+                            ],
+                          ),
                   ],
                 ),
               ),

@@ -6,8 +6,10 @@ class SingleDelivery extends StatelessWidget {
   final String address;
   final String addressType;
   final String number;
+  final String email;
   const SingleDelivery(
       {super.key,
+      required this.email,
       required this.title,
       required this.address,
       required this.addressType,
@@ -54,6 +56,10 @@ class SingleDelivery extends StatelessWidget {
                 height: 2,
               ),
               Text(number),
+              const SizedBox(
+                height: 2,
+              ),
+              Text(email),
             ],
           ),
         ),
