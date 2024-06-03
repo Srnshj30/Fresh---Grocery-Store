@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/model/review_cart_model.dart';
+
+class OrderItem extends StatelessWidget {
+  final ReviewCartModel e;
+  const OrderItem({super.key, required this.e});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Image.asset(
+        e.cartImage,
+        width: 60,
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            e.cartName,
+            style: TextStyle(
+              color: Colors.grey[600],
+            ),
+          ),
+          Text(
+            e.cartUnit,
+            style: TextStyle(
+              color: Colors.grey[600],
+            ),
+          ),
+          Text(
+            "${e.cartPrice}",
+            style: TextStyle(
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(
+        "${e.cartQty}",
+        style: TextStyle(
+          color: Colors.grey[600],
+        ),
+      ),
+    );
+  }
+}
