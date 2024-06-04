@@ -1,10 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fresh_grocery_app/screen/Profile/about.dart';
+import 'package:fresh_grocery_app/screen/Profile/privacy_policy.dart';
+import 'package:fresh_grocery_app/screen/Profile/refer_a_friend.dart';
+import 'package:fresh_grocery_app/screen/Profile/terms_condition.dart';
+import 'package:fresh_grocery_app/screen/check_out/delivery_details/delivery_details.dart';
+import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:fresh_grocery_app/config/config.dart';
 import 'package:fresh_grocery_app/provider/user_provider.dart';
 import 'package:fresh_grocery_app/screen/home_screen/drawer_side.dart';
+// import 'package:provider/provider.dart';
 
 class MyProfile extends StatefulWidget {
   final UserProvider userProvider;
@@ -38,6 +46,7 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    // UserProvider userProvider = Provider.of(context);
     var userData = widget.userProvider.currentUserData;
     return Scaffold(
       // backgroundColor: Colors.black38,
@@ -100,50 +109,106 @@ class _MyProfileState extends State<MyProfile> {
                                   Text(userData.userEmail),
                                 ],
                               ),
-                              CircleAvatar(
-                                radius: 15,
-                                backgroundColor: taskbarColor,
-                                child: CircleAvatar(
-                                  radius: 12,
-                                  backgroundColor: Colors.white,
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: taskbarColor,
-                                    size: 18,
-                                  ),
-                                ),
-                              )
+                              // CircleAvatar(
+                              //   radius: 15,
+                              //   backgroundColor: taskbarColor,
+                              //   child: CircleAvatar(
+                              //     radius: 12,
+                              //     backgroundColor: Colors.white,
+                              //     child: Icon(
+                              //       Icons.edit,
+                              //       color: taskbarColor,
+                              //       size: 18,
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
                       ],
                     ),
-                    listTile(
-                      icon: Icons.shopping_bag_outlined,
-                      title: "My Orders",
-                    ),
-                    listTile(
-                      icon: Icons.location_on_outlined,
-                      title: "My Delivery Address",
-                    ),
-                    listTile(
-                      icon: Icons.people_alt_outlined,
-                      title: "Refer A Friend",
-                    ),
-                    listTile(
-                      icon: Icons.file_copy_outlined,
-                      title: "Terms and Conditions",
-                    ),
-                    listTile(
-                      icon: Icons.policy_outlined,
-                      title: "Privacy Policy",
-                    ),
-                    listTile(
-                      icon: Icons.addchart_outlined,
-                      title: "About",
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ReviewCart(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.shopping_bag_outlined,
+                        title: "My Cart",
+                      ),
                     ),
                     InkWell(
                       onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const DeliveryDetails(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.location_on_outlined,
+                        title: "My Delivery Address",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ReferAFriend(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.people_alt_outlined,
+                        title: "Refer A Friend",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const TermsAndConditionsScreen(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.file_copy_outlined,
+                        title: "Terms and Conditions",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const PrivacyPolicyScreen(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.policy_outlined,
+                        title: "Privacy Policy",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const About(),
+                          ),
+                        );
+                      },
+                      child: listTile(
+                        icon: Icons.addchart_outlined,
+                        title: "About",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        FirebaseAuth.instance.signOut();
                         GoogleSignIn().signOut();
                       },
                       child: listTile(
