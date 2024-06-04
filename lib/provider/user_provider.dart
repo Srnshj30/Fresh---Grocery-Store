@@ -46,4 +46,12 @@ class UserProvider with ChangeNotifier {
   UserModel get currentUserData {
     return currentData;
   }
+
+  userDeleteData() {
+    FirebaseFirestore.instance
+        .collection("UserData")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .delete();
+    notifyListeners();
+  }
 }

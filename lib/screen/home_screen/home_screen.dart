@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fresh_grocery_app/provider/product_provider.dart';
 import 'package:fresh_grocery_app/provider/user_provider.dart';
@@ -108,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.grey[300],
               child: IconButton(
                 onPressed: () {
+                  FirebaseAuth.instance.signOut();
                   GoogleSignIn().signOut();
                 },
                 icon: const Icon(

@@ -57,7 +57,7 @@ class SignIn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 400,
+              height: 450,
               width: double.infinity,
               // color: Colors.blue,
               child: Column(
@@ -70,21 +70,25 @@ class SignIn extends StatelessWidget {
                         fontStyle: FontStyle.italic,
                         color: Color.fromARGB(255, 127, 127, 127)),
                   ),
-                  const Text(
-                    'Fresh',
-                    style: TextStyle(
-                      fontSize: 100,
-                      color: Color.fromARGB(236, 42, 118, 108),
-                      fontStyle: FontStyle.normal,
-                      fontFamily: 'Great Vibes',
-                      shadows: [
-                        BoxShadow(
-                          blurRadius: 19,
-                          color: Color.fromARGB(220, 81, 228, 132),
-                          offset: Offset(0, 0),
-                        ),
-                      ],
-                    ),
+                  // const Text(
+                  //   'Fresh',
+                  //   style: TextStyle(
+                  //     fontSize: 100,
+                  //     color: Color.fromARGB(236, 42, 118, 108),
+                  //     fontStyle: FontStyle.normal,
+                  //     fontFamily: 'Great Vibes',
+                  //     shadows: [
+                  //       BoxShadow(
+                  //         blurRadius: 19,
+                  //         color: Color.fromARGB(220, 81, 228, 132),
+                  //         offset: Offset(0, 0),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  Image.asset("assets/logo.png"),
+                  const SizedBox(
+                    height: 5,
                   ),
                   GoogleAuthButton(
                     onPressed: () => signInWithGoogle(),
