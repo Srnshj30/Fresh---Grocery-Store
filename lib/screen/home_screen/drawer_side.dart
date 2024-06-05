@@ -1,7 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:fresh_grocery_app/provider/user_provider.dart';
+import 'package:fresh_grocery_app/screen/Drawer/faq.dart';
+import 'package:fresh_grocery_app/screen/Drawer/notification.dart';
+import 'package:fresh_grocery_app/screen/Drawer/raise_complaint.dart';
+import 'package:fresh_grocery_app/screen/Drawer/ratings.dart';
 import 'package:fresh_grocery_app/screen/home_screen/home_screen.dart';
 import 'package:fresh_grocery_app/screen/my_profile/my_profile.dart';
 import 'package:fresh_grocery_app/screen/review_cart/review_cart.dart';
@@ -151,11 +154,49 @@ class _DrawerSideState extends State<DrawerSide> {
               },
             ),
             listTitle(
-                icon: Icons.notifications_outlined, title: 'Notification'),
-            listTitle(icon: Icons.star_outline, title: 'Ratings & Review'),
+              icon: Icons.notifications_outlined,
+              title: 'Notification',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const Notifications(),
+                  ),
+                );
+              },
+            ),
             listTitle(
-                icon: Icons.file_copy_outlined, title: 'Raise a Complaint'),
-            listTitle(icon: Icons.format_quote, title: 'FAQ'),
+              icon: Icons.star_outline,
+              title: 'Ratings & Review',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const RatingsAndReviews(),
+                  ),
+                );
+              },
+            ),
+            listTitle(
+              icon: Icons.file_copy_outlined,
+              title: 'Raise a Complaint',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const RaiseComplaint(),
+                  ),
+                );
+              },
+            ),
+            listTitle(
+              icon: Icons.format_quote,
+              title: 'FAQ',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const FAQ(),
+                  ),
+                );
+              },
+            ),
             const SizedBox(
               height: 15,
             ),
