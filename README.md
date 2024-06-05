@@ -71,9 +71,10 @@ After setting up the project, you can start the app on an emulator or a physical
 
 Here are some screenshots of the app in action:
 
-![Home Screen](screenshots/home_screen.png)
-![Product Details](screenshots/product_details.png)
-![Cart](screenshots/cart.png)
+
+![Home Screen](screenshots/Home_Page.jpg)
+![Product Details](screenshots/Product_Overview.jpg)
+![Cart](screenshots/Review_Cart_Page.jpg)
 
 ## Contributing
 
